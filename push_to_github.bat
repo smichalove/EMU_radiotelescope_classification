@@ -17,8 +17,9 @@ echo Committing changes...
 git commit -m "Automated update of EMU classifier"
 
 echo Synchronizing with remote...
+git merge --abort >nul 2>&1
 git branch -M main
-git pull origin main --allow-unrelated-histories --no-edit
+git pull origin main --allow-unrelated-histories -X ours --no-edit
 
 echo Pushing to GitHub...
 git push -u origin main

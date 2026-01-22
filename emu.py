@@ -90,10 +90,13 @@ def classify_image_with_gemini(client: genai.Client, image_data: bytes, prompt: 
     print("\n--- Sending Image to Gemini for Classification ---")
     
     try:
+        # Determine correct MIME type
+        mime_type = 'image/png' if extension.lower() == '.png' else 'image/jpeg'
+        
         # 1. Create a Part object from the image bytes
         image_part: types.Part = types.Part.from_bytes(
             data=image_data,
-            mime_type='image/png' # Updated to match the PNGs seen in logs
+            mime_type=mime_type
         )
 
         # 3. Call the Gemini model
@@ -197,7 +200,7 @@ def main() -> None:
             print(f"Failed to save image locally: {e}")
 
         # Step 2: Classify Image
-        classification_result = classify_image_with_gemini(client, image_bytes, CLASSIFICATION_PROMPT)
+        classification_result = classify_image_with_gemini(client, image_bytes, CLASSIFICATION_PROMPT, extension)
 
         if classification_result:
             print(f"\n[Subject ID: {subject_id}]")
