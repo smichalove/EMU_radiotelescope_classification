@@ -1,0 +1,4 @@
+panoptes-client
+requests
+google-genai
+google-cloud-aiplatform
